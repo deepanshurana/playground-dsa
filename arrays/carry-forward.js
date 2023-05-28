@@ -83,6 +83,131 @@ const findMinSubarray = () => {
 };
 //==================================================================
 
-findagpairs();
-countLeaders();
-findMinSubarray();
+// findagpairs();
+// countLeaders();
+// findMinSubarray();
+
+// ============================ Some other questionss=================
+
+//=================== Closest min max in given range==================
+const closestMinMax = (a) => {
+    let minIndex = -1;
+    let maxIndex = -1;
+    let answer = a.length;
+
+    minVal = Math.min(...a);
+    maxVal = Math.max(...a);
+    if (minVal === maxVal) {
+        return 1;
+    }
+    for (let i = a.length - 1; i >= 0; i--) {
+        if (a[i] == minVal) {
+            minIndex = i;
+            if (maxIndex === -1) {
+                continue;
+            }
+            answer = Math.min(answer, Math.abs(minIndex - maxIndex) + 1);
+        }
+        if (a[i] === maxVal) {
+            maxIndex = i;
+            if (minIndex == -1) {
+                continue;
+            }
+            answer = Math.min(answer, Math.abs(minIndex - maxIndex) + 1);
+        }
+    }
+    return answer;
+};
+
+let a = [814, 761, 483, 981];
+// console.log(closestMinMax(a));
+
+//============================ Buy Sell Stocks========================
+const buySellStock = (arr) => {
+    let maxProfit = 0;
+    let buy = 0;
+    for (let sell = 1; sell < arr.length; sell++) {
+        let currProfit = arr[sell] - arr[buy];
+        console.log(buy, sell, currProfit);
+        if (currProfit > 0) {
+            maxProfit = Math.max(maxProfit, currProfit);
+        } else {
+            buy = sell;
+        }
+    }
+    return maxProfit;
+};
+
+let arr = [7, 6, 4];
+// console.log(buySellStock(arr));
+
+//============================== Count Subarrays=====================
+const countSubarrays = (str) => {
+    let count = 0;
+    const vowels = "aeiouAEIOU";
+
+    for (let i = 0; i < str.length; i++) {
+        if (vowels.includes(str[i])) {
+            count += str.length - i;
+        }
+    }
+
+    return count % 10003;
+};
+
+const str = "abec";
+// console.log(countSubarrays(str));
+
+const evenSubArrays = (arr) => {
+    const isEven = (num) => (num & 1) === 0;
+    return isEven(arr.length) && isEven(arr[0]) && isEven(arr[arr.length])
+        ? "YES"
+        : "NO";
+};
+// console.log(evenSubArrays([2, 4, 20, 20]));
+
+//============================= Some Random questions================
+const Bulbs = (arr) => {
+    let toggle = false;
+    let count = 0;
+    for (let i of arr) {
+        if ((i === 0 && !toggle) || (i === 1 && toggle)) {
+            count++;
+            toggle = !toggle;
+        }
+    }
+
+    return count;
+};
+// console.log(Bulbs([1, 0, 1, 0, 0, 1, 1, 0]));
+
+//===================================================================
+const pickFromBothSides = (arr, B) => {
+    let start = 0,
+        end = arr.length - 1;
+
+    let back = B - 1,
+        currSum = arr.slice(start, B).reduce((res, ele) => res + ele, 0);
+    let answer = currSum;
+
+    for (let totalOps = 0; totalOps < B; totalOps++) {
+        currSum = currSum - arr[back] + arr[end];
+        answer = Math.max(answer, currSum);
+        back--;
+        end--;
+    }
+    return answer;
+};
+
+// console.log(
+//     pickFromBothSides(
+//         [
+//             -533, -666, -500, 169, 724, 478, 358, -38, -536, 705, -855, 281,
+//             -173, 961, -509, -5, 942, -173, 436, -609, -396, 902, -847, -708,
+//             -618, 421, -284, 718, 895, 447, 726, -229, 538, 869, 912, 667, -701,
+//             35, 894, -297, 811, 322, -667, 673, -336, 141, 711, -747, -132, 547,
+//             644, -338, -243, -963, -141, -277, 741, 529, -222, -684, 35,
+//         ],
+//         48
+//     )
+// );
